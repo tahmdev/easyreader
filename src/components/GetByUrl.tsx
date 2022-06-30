@@ -5,14 +5,14 @@ import React, {
   useContext,
   useState,
 } from "react";
-import { ArticleContext } from "../App";
+import { ArticleContext } from "../context/ArticleCTX";
 
 interface Props {
   hide: () => void;
 }
 export const GetByURL: React.FC<Props> = ({ hide }) => {
   const [queryUrl, setQueryUrl] = useState("");
-  const ctx = useContext(ArticleContext);
+  const { setArticle } = useContext(ArticleContext);
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setQueryUrl(e.target.value);
@@ -21,7 +21,7 @@ export const GetByURL: React.FC<Props> = ({ hide }) => {
   const handleQuery = () => {
     fetch("http://localhost:9000/scrape/url/?url=" + queryUrl)
       .then((res) => res.json())
-      .then((json) => ctx?.setArticle(json));
+      .then((json) => setArticle(json));
     hide();
   };
 

@@ -1,47 +1,44 @@
-import React, {
-  ChangeEventHandler,
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-import logo from "./logo.svg";
+import { useState } from "react";
 import "./App.css";
-import { parse } from "node:path/win32";
-import { json } from "stream/consumers";
 import { Reader } from "./components/Reader";
-import { ReaderSidebar } from "./components/Reader-sidebar";
-
-interface Article {
-  author: string;
-  content: string;
-  description: string;
-  image: string;
-  links: string[];
-  published: string;
-  source: string;
-  title: string;
-  ttr: number;
-  url: string;
-}
-
-export const ArticleContext = createContext<{
-  article: Article | null;
-  setArticle: Dispatch<SetStateAction<Article | null>>;
-} | null>(null);
+import useLocalstorage from "./hooks/useLocalstorage";
+import { SettingsContext } from "./context/SettingsCTX";
+import { Article, ArticleContext } from "./context/ArticleCTX";
 
 function App() {
   const [article, setArticle] = useState<Article | null>(null);
-
+  const initialSettings = {
+    theme: {
+      Background: "#202020",
+      Reader: "#202020",
+      Text: "#FFF",
+      "Link Color": "#B85885",
+    },
+    text: {
+      Font: "Arial",
+      "Font size": 16,
+      "Line height": 27,
+    },
+    other: {
+      "Hide images": false,
+    },
+    flash: {
+      speed: 1000,
+      "Use smart flashing": false,
+    },
+  };
+  const [settings, setSettings] = useLocalstorage(
+    "EZReaderSettings",
+    initialSettings
+  );
   return (
     <div className="App">
-      <ArticleContext.Provider
-        value={{ article: article, setArticle: setArticle }}
-      >
-        <div className="reader-sidebar-wrapper">
-          <Reader />
-        </div>
+      <ArticleContext.Provider value={{ article, setArticle }}>
+        <SettingsContext.Provider value={{ settings, setSettings }}>
+          <div className="reader-sidebar-wrapper">
+            <Reader />
+          </div>
+        </SettingsContext.Provider>
       </ArticleContext.Provider>
     </div>
   );
