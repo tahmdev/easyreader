@@ -1,4 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
+import { Settings } from "../components/Settings";
 
 interface Isetting {
   label: string;
@@ -6,6 +7,8 @@ interface Isetting {
   value?: string | number;
   property?: string;
   checked?: boolean;
+  options?: string[];
+  suffix?: string;
 }
 
 export interface ISettings {
@@ -58,6 +61,22 @@ export const initialSettings: ISettings[] = [
       {
         label: "Font",
         type: "select",
+        options: [
+          "Arial",
+          "Arial Black",
+          "Comic Sans MS",
+          "Courier",
+          "Courier New",
+          "Garamond",
+          "Georgia",
+          "Helvetica",
+          "Impact",
+          "Palatino",
+          "Tahoma",
+          "Times",
+          "Times New Roman",
+          "Verdana",
+        ],
         value: "Arial",
         property: "--font-family",
       },
@@ -65,13 +84,25 @@ export const initialSettings: ISettings[] = [
         label: "Font size",
         type: "number",
         value: "16",
+        suffix: "px",
         property: "--font-size",
       },
       {
         label: "Line height",
         type: "number",
-        value: "27",
+        value: "25",
+        suffix: "px",
         property: "--line-height",
+      },
+    ],
+  },
+  {
+    title: "Reading help",
+    settings: [
+      {
+        label: "Use reading orientation",
+        type: "checkbox",
+        checked: false,
       },
     ],
   },

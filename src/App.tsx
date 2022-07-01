@@ -24,7 +24,12 @@ function App() {
     settings.map((section: ISettings) =>
       section.settings.map((setting) => {
         if (setting.property) {
-          root.style.setProperty(setting.property, String(setting.value));
+          root.style.setProperty(
+            setting.property,
+            String(
+              setting.suffix ? setting.value + setting.suffix : setting.value
+            )
+          );
         }
       })
     );

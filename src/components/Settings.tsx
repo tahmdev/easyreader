@@ -14,11 +14,9 @@ export const Settings: React.FC<Props> = () => {
         settings: section.settings.map((setting) => {
           if (setting.label === label) {
             return {
-              label: setting.label,
-              type: setting.type,
+              ...setting,
               value: e.target.value,
               checked: e.target.checked,
-              property: setting.property,
             };
           } else {
             return setting;
@@ -35,9 +33,26 @@ export const Settings: React.FC<Props> = () => {
         <div key={section.title}>
           <h2>{section.title}</h2>
           {section.settings.map((setting) => {
+            if (setting.type === "select") {
+              return (
+                <label key={setting.label}>
+                  <span>{setting.label}</span>
+                  <select
+                    onChange={(e) => handleChange(setting.label, e)}
+                    defaultValue={setting.value}
+                  >
+                    {setting.options?.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              );
+            }
             return (
               <label key={setting.label}>
-                {setting.label}
+                <span>{setting.label}:</span>
                 <input
                   type={setting.type}
                   onChange={(e) => handleChange(setting.label, e)}
