@@ -6,6 +6,8 @@
   --font-family: "Arial";
   --font-size: 16px;
   --line-height: 25px;
+  --reader-width: 727px;
+  --hide-images: initial;
 }
 html,
 body,
@@ -41,15 +43,16 @@ pre {
   display: flex;
 }
 .reader-wrapper {
-  width: 500px;
-  height: 100vh;
-  overflow: auto;
+  min-width: 200px;
+  width: var(--reader-width);
+  max-width: 90vw;
   padding: 0 1rem;
   background-color: var(--reader-color);
 }
 .reader-wrapper img {
   max-width: 100%;
   height: auto;
+  display: var(--hide-images);
 }
 .sidebar-wrapper {
   position: fixed;

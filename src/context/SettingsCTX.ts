@@ -53,6 +53,13 @@ export const initialSettings: ISettings[] = [
         value: "#B85885",
         property: "--link-color",
       },
+      {
+        label: "Reader width",
+        type: "number",
+        suffix: "px",
+        value: 727,
+        property: "--reader-width",
+      },
     ],
   },
   {
@@ -97,22 +104,13 @@ export const initialSettings: ISettings[] = [
     ],
   },
   {
-    title: "Reading help",
-    settings: [
-      {
-        label: "Use reading orientation",
-        type: "checkbox",
-        checked: false,
-      },
-    ],
-  },
-  {
     title: "Other",
     settings: [
       {
         label: "Hide images",
         type: "checkbox",
         checked: false,
+        property: "--hide-images",
       },
     ],
   },

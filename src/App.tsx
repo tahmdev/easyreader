@@ -9,7 +9,8 @@ import {
 } from "./context/SettingsCTX";
 import { Article, ArticleContext } from "./context/ArticleCTX";
 
-// TODO: Reading speed dots
+// TODO:
+// GET FULL INSIDE TEXT FOR FLASH READING AND POTENTIALLY FOCUS HELP
 // Bookmarks
 
 function App() {
@@ -19,17 +20,29 @@ function App() {
     "EZReaderSettings",
     initialSettings
   );
+
   useEffect(() => {
     let root = document.documentElement;
     settings.map((section: ISettings) =>
       section.settings.map((setting) => {
         if (setting.property) {
-          root.style.setProperty(
-            setting.property,
-            String(
-              setting.suffix ? setting.value + setting.suffix : setting.value
-            )
-          );
+          switch (setting.label) {
+            case "Hide images":
+              root.style.setProperty(
+                setting.property,
+                setting.checked ? "none" : "initial"
+              );
+              break;
+            default:
+              root.style.setProperty(
+                setting.property,
+                String(
+                  setting.suffix
+                    ? setting.value + setting.suffix
+                    : setting.value
+                )
+              );
+          }
         }
       })
     );
