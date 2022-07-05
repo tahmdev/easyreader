@@ -11,6 +11,7 @@ export const ReaderSidebar: React.FC<Props> = ({
   addBookmark,
 }) => {
   const [showGetByUrl, setShowGetByUrl] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
   const buttons = [
     {
       label: "Get by url",
@@ -49,11 +50,18 @@ export const ReaderSidebar: React.FC<Props> = ({
   ];
   return (
     <div className="sidebar-wrapper">
-      {buttons.map((el) => (
-        <button key={el.label} onClick={el.fn}>
-          {el.label}
-        </button>
-      ))}
+      <button
+        className={`${showSidebar ? "" : "sidebar-toggle-hidden"}`}
+        onClick={() => setShowSidebar((prev) => !prev)}
+      >
+        {showSidebar ? "▶" : "◀"}
+      </button>
+      {showSidebar &&
+        buttons.map((el) => (
+          <button key={el.label} onClick={el.fn}>
+            {el.label}
+          </button>
+        ))}
       {showGetByUrl && <GetByURL hide={() => setShowGetByUrl(false)} />}
     </div>
   );
