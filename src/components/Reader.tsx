@@ -13,22 +13,29 @@ export const Reader: React.FC<Props> = () => {
   const { article, setArticle } = useContext(ArticleContext);
   const visibleElements = useGetVisibleChildren(readerRef, { threshold: 1 }, [
     article,
+    display,
   ]);
 
   const addBookmark = () => {
-    readerRef.current
-      ?.getElementsByClassName("bookmark")
-      .item(0)
-      ?.classList.remove("bookmark");
-    visibleElements
-      .filter((el) => el.tagName !== "BR")
-      .sort(
-        (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
-      )
-      .at(-1)
-      ?.classList.add("bookmark");
-    if (article && readerRef.current) {
-      setArticle({ ...article, content: String(readerRef.current.innerHTML) });
+    if (display === "reader") {
+      readerRef.current
+        ?.getElementsByClassName("bookmark")
+        .item(0)
+        ?.classList.remove("bookmark");
+      visibleElements
+        .filter((el) => el.tagName !== "BR")
+        .sort(
+          (a, b) =>
+            a.getBoundingClientRect().top - b.getBoundingClientRect().top
+        )
+        .at(-1)
+        ?.classList.add("bookmark");
+      if (article && readerRef.current) {
+        setArticle({
+          ...article,
+          content: String(readerRef.current.innerHTML),
+        });
+      }
     }
   };
 
