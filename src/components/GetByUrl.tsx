@@ -23,7 +23,7 @@ export const GetByURL: React.FC<Props> = ({ hide }) => {
   };
 
   const handleQuery = () => {
-    fetch("http://localhost:9000/scrape/url/?url=" + queryUrl)
+    fetch("http://192.168.178.22:9000/scrape/url/?url=" + queryUrl)
       .then((res) => res.json())
       .then((json) => setArticle(json));
     hide();

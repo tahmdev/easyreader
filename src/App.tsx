@@ -52,9 +52,7 @@ function App() {
     <div className="App">
       <ArticleContext.Provider value={{ article, setArticle }}>
         <SettingsContext.Provider value={{ settings, setSettings }}>
-          <div className="reader-sidebar-wrapper">
-            <Reader />
-          </div>
+          <Reader />
         </SettingsContext.Provider>
       </ArticleContext.Provider>
     </div>

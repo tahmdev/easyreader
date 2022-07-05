@@ -1,5 +1,4 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { Settings } from "../components/Settings";
 
 interface Isetting {
   label: string;

@@ -1,7 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { SettingsContext } from "../context/SettingsCTX";
-
-const a: string = "theme";
 
 interface Props {}
 export const Settings: React.FC<Props> = () => {
