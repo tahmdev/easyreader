@@ -1,34 +1,57 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { GetByURL } from "./GetByUrl";
+import { displayType } from "./Reader";
 
 interface Props {
-  setShowSettings: Dispatch<SetStateAction<false | true>>;
+  setShowSettings: Dispatch<SetStateAction<displayType>>;
+  addBookmark: () => void;
 }
-export const ReaderSidebar: React.FC<Props> = ({ setShowSettings }) => {
+export const ReaderSidebar: React.FC<Props> = ({
+  setShowSettings,
+  addBookmark,
+}) => {
   const [showGetByUrl, setShowGetByUrl] = useState(false);
   const buttons = [
     {
-      name: "Get by url",
+      label: "Get by url",
       fn: () => setShowGetByUrl((prev) => !prev),
     },
     {
-      name: "Edit",
+      label: "Edit",
       fn: () => console.log("b"),
     },
     {
-      name: "Flash reading",
+      label: "Bookmarks",
+      fn: () =>
+        setShowSettings((prev) =>
+          prev !== "bookmarks" ? "bookmarks" : "reader"
+        ),
+    },
+    {
+      label: "Add bookmark",
+      fn: () => addBookmark(),
+    },
+    {
+      label: "Note",
+      fn: () => console.log("c"),
+    },
+    {
+      label: "Flash reading",
       fn: () => console.log("a"),
     },
     {
-      name: "Settings",
-      fn: () => setShowSettings((prev) => !prev),
+      label: "Settings",
+      fn: () =>
+        setShowSettings((prev) =>
+          prev !== "settings" ? "settings" : "reader"
+        ),
     },
   ];
   return (
     <div className="sidebar-wrapper">
       {buttons.map((el) => (
-        <button key={el.name} onClick={el.fn}>
-          {el.name}
+        <button key={el.label} onClick={el.fn}>
+          {el.label}
         </button>
       ))}
       {showGetByUrl && <GetByURL hide={() => setShowGetByUrl(false)} />}

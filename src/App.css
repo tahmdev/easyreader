@@ -41,6 +41,7 @@ pre {
 }
 .reader-sidebar-wrapper {
   display: flex;
+  position: relative;
 }
 .reader-wrapper {
   min-width: 200px;
@@ -55,10 +56,11 @@ pre {
   display: var(--hide-images);
 }
 .sidebar-wrapper {
-  position: fixed;
+  height: fit-content;
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: sticky;
+  top: 0px;
 }
 .get-by-url {
   display: flex;
@@ -72,4 +74,12 @@ pre {
 }
 .settings-wrapper label > span {
   margin-right: 0.5rem;
+}
+.bookmark::after {
+  content: "";
+  position: absolute;
+  background-color: rgba(255, 0, 0, 0.445);
+  width: calc(var(--reader-width) + 2rem);
+  height: 1.5rem;
+  left: 0;
 }
