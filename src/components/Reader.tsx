@@ -1,4 +1,10 @@
-import React, { useContext, useRef, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { ArticleContext } from "../context/ArticleCTX";
 import { useGetVisibleChildren } from "../hooks/useGetVisibleChildren";
 import { ReaderSidebar } from "./Reader-sidebar";
@@ -16,26 +22,55 @@ export const Reader: React.FC<Props> = () => {
     display,
   ]);
 
+  const scrollToLastPos = () => {
+    const lastScrollPos = readerRef.current
+      ?.getElementsByClassName("lastscrollpos")
+      .item(0);
+    lastScrollPos?.scrollIntoView();
+  };
+
+
+  useEffect(() => {
+    scrollToLastPos();
+  }, [display]);
+
+  useEffect(() => {
+    if (display === "reader") {
+      removeAllOfClass("lastscrollpos");
+      addClassToTopElement("lastscrollpos");
+    }
+  }, [visibleElements]);
+
   const addBookmark = () => {
     if (display === "reader") {
-      readerRef.current
-        ?.getElementsByClassName("bookmark")
-        .item(0)
-        ?.classList.remove("bookmark");
-      visibleElements
-        .filter((el) => el.tagName !== "BR")
-        .sort(
-          (a, b) =>
-            a.getBoundingClientRect().top - b.getBoundingClientRect().top
-        )
-        .at(-1)
-        ?.classList.add("bookmark");
-      if (article && readerRef.current) {
-        setArticle({
-          ...article,
-          content: String(readerRef.current.innerHTML),
-        });
-      }
+      removeAllOfClass("bookmark");
+      addClassToTopElement("bookmark");
+      updateArticle();
+    }
+  };
+
+  const updateArticle = () => {
+    if (article && readerRef.current && display === "reader") {
+      setArticle({
+        ...article,
+        content: String(readerRef.current.innerHTML),
+      });
+    }
+  };
+
+  const addClassToTopElement = (className: string) => {
+    visibleElements
+      .filter((el) => el.tagName !== "BR")
+      .sort(
+        (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
+      )[0]
+      ?.classList.add(className);
+  };
+
+  const removeAllOfClass = (className: string) => {
+    const elements = document.getElementsByClassName(className);
+    for (let el of elements) {
+      el.classList.remove(className);
     }
   };
 
@@ -47,7 +82,11 @@ export const Reader: React.FC<Props> = () => {
         )}
         {display === "settings" && <Settings />}
       </div>
-      <ReaderSidebar setShowSettings={setDisplay} addBookmark={addBookmark} />
+      <ReaderSidebar
+        setShowSettings={setDisplay}
+        addBookmark={addBookmark}
+        updateArticle={updateArticle}
+      />
     </div>
   );
 };
