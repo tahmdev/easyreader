@@ -29,6 +29,12 @@ export const Reader: React.FC<Props> = () => {
     lastScrollPos?.scrollIntoView();
   };
 
+  useEffect(() => {
+    const observer = new ResizeObserver(scrollToLastPos);
+    if (readerRef.current) {
+      observer.observe(readerRef.current);
+    }
+  }, []);
 
   useEffect(() => {
     scrollToLastPos();
