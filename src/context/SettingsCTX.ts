@@ -35,7 +35,7 @@ export const initialSettings: ISettings[] = [
         property: "--bg-color",
       },
       {
-        label: "Reader Background",
+        label: "Reader Background Color",
         type: "color",
         value: "#202020",
         property: "--reader-color",
@@ -51,6 +51,12 @@ export const initialSettings: ISettings[] = [
         type: "color",
         value: "#B85885",
         property: "--link-color",
+      },
+      {
+        label: "Bookmark color",
+        type: "color",
+        value: "#76d07c",
+        property: "--bookmark-color",
       },
       {
         label: "Reader width",

@@ -1,10 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ArticleContext } from "../context/ArticleCTX";
 import { useGetVisibleChildren } from "../hooks/useGetVisibleChildren";
 import { ReaderSidebar } from "./Reader-sidebar";
@@ -17,7 +11,7 @@ export const Reader: React.FC<Props> = () => {
   const readerRef = useRef<HTMLDivElement | null>(null);
   const [display, setDisplay] = useState<displayType>("reader");
   const { article, setArticle } = useContext(ArticleContext);
-  const visibleElements = useGetVisibleChildren(readerRef, { threshold: 1 }, [
+  const visibleElements = useGetVisibleChildren(readerRef, { threshold: 0.3 }, [
     article,
     display,
   ]);
@@ -65,8 +59,10 @@ export const Reader: React.FC<Props> = () => {
   };
 
   const addClassToTopElement = (className: string) => {
+    console.log(visibleElements);
+    const filteredTags = ["BR", "EM"];
     visibleElements
-      .filter((el) => el.tagName !== "BR")
+      .filter((el) => !filteredTags.includes(el.tagName))
       .sort(
         (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
       )[0]

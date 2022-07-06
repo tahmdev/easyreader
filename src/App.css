@@ -8,6 +8,7 @@
   --line-height: 25px;
   --reader-width: 727px;
   --hide-images: initial;
+  --bookmark-color: rgba(255, 0, 0, 0.445);
 }
 html,
 body,
@@ -107,11 +108,15 @@ pre {
 }
 
 /*Bookmark*/
+.bookmark {
+  position: relative;
+}
 .bookmark::after {
   content: "";
   position: absolute;
-  background-color: rgba(255, 0, 0, 0.445);
-  width: 100%;
-  height: 1.5rem;
-  left: 0;
+  background-color: var(--bookmark-color);
+  width: 6px;
+  height: 100%;
+  top: 0;
+  left: -1rem;
 }
