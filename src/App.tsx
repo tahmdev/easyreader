@@ -1,36 +1,38 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { Reader } from "./components/Reader";
-import useLocalstorage from "./hooks/useLocalstorage";
-import {
-  initialSettings,
-  ISettings,
-  SettingsContext,
-} from "./context/SettingsCTX";
 import { Article, ArticleContext } from "./context/ArticleCTX";
+import { store } from "./redux/store";
+import { useAppSelector } from "./redux/typedHooks";
+import { ISetting } from "./redux/slices/settingSlice";
 
 // TODO:
-// GET FULL INSIDE TEXT FOR FLASH READING AND POTENTIALLY FOCUS HELP
-// Bookmarks
+// SCROLL TO TOP ON NEW ARTICLE
 
 function App() {
   const [article, setArticle] = useState<Article | null>(null);
 
-  const [settings, setSettings] = useLocalstorage(
-    "EZReaderSettings",
-    initialSettings
-  );
+  // const [settings, setSettings] = useLocalstorage(
+  //   "EZReaderSettings",
+  //   initialSettings
+  // );
+
+  const settings = useAppSelector((state) => state.settings.value);
+
+  useEffect(() => {
+    store.subscribe(() => {});
+  }, [store]);
 
   useEffect(() => {
     let root = document.documentElement;
-    settings.map((section: ISettings) =>
+    settings.map((section: ISetting) =>
       section.settings.map((setting) => {
         if (setting.property) {
           switch (setting.label) {
             case "Hide images":
               root.style.setProperty(
                 setting.property,
-                setting.checked ? "none" : "initial"
+                setting.value ? "none" : "initial"
               );
               break;
             default:
@@ -51,9 +53,7 @@ function App() {
   return (
     <div className="App">
       <ArticleContext.Provider value={{ article, setArticle }}>
-        <SettingsContext.Provider value={{ settings, setSettings }}>
-          <Reader />
-        </SettingsContext.Provider>
+        <Reader />
       </ArticleContext.Provider>
     </div>
   );

@@ -60,7 +60,7 @@ export const Reader: React.FC<Props> = () => {
 
   const addClassToTopElement = (className: string) => {
     console.log(visibleElements);
-    const filteredTags = ["BR", "EM"];
+    const filteredTags = ["BR", "EM", "DIV"];
     visibleElements
       .filter((el) => !filteredTags.includes(el.tagName))
       .sort(

@@ -1,28 +1,22 @@
-import React, { useContext } from "react";
-import { SettingsContext } from "../context/SettingsCTX";
+import React from "react";
+import { update } from "../redux/slices/settingSlice";
+import { useAppDispatch, useAppSelector } from "../redux/typedHooks";
 
 interface Props {}
 export const Settings: React.FC<Props> = () => {
-  const { settings, setSettings } = useContext(SettingsContext);
+  const dispatch = useAppDispatch();
+  const settings = useAppSelector((state) => state.settings.value);
 
-  const handleChange = (label: any, e: any) => {
-    const newSettings = settings.map((section) => {
-      return {
-        title: section.title,
-        settings: section.settings.map((setting) => {
-          if (setting.label === label) {
-            return {
-              ...setting,
-              value: e.target.value,
-              checked: e.target.checked,
-            };
-          } else {
-            return setting;
-          }
-        }),
-      };
-    });
-    setSettings(newSettings);
+  const handleChange = (type: string, label: string, e: any) => {
+    let value;
+    switch (type) {
+      case "checkbox":
+        value = e.target.checked;
+        break;
+      default:
+        value = e.target.value;
+    }
+    dispatch(update({ label: label, value: value }));
   };
 
   return (
@@ -36,8 +30,10 @@ export const Settings: React.FC<Props> = () => {
                 <label key={setting.label}>
                   <span>{setting.label}</span>
                   <select
-                    onChange={(e) => handleChange(setting.label, e)}
-                    defaultValue={setting.value}
+                    onChange={(e) =>
+                      handleChange(setting.type, setting.label, e)
+                    }
+                    defaultValue={String(setting.value)}
                   >
                     {setting.options?.map((option) => (
                       <option key={option} value={option}>
@@ -53,9 +49,9 @@ export const Settings: React.FC<Props> = () => {
                 <span>{setting.label}:</span>
                 <input
                   type={setting.type}
-                  onChange={(e) => handleChange(setting.label, e)}
-                  value={setting.value}
-                  checked={setting.checked}
+                  onChange={(e) => handleChange(setting.type, setting.label, e)}
+                  value={String(setting.value)}
+                  checked={Boolean(setting.value)}
                 />
               </label>
             );
