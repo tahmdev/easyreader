@@ -6,7 +6,7 @@ export const settingsMiddleware =
     if (settingSlice.actions.update.match(action)) {
       setTimeout(() => {
         localStorage.setItem(
-          "reduxTest",
+          "EZReaderSettings",
           JSON.stringify(store.getState().settings.value)
         );
       }, 100);
