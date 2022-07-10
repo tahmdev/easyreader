@@ -1,18 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { settingsMiddleware } from "./middleware";
+import { localStorageMiddleware } from "./middleware";
 import { articleReducer } from "./slices/articleSlice";
+import { bookmarksReducer } from "./slices/bookmarksSlice";
 import settingReducer from "./slices/settingSlice";
 
 export const store = configureStore({
   reducer: {
     settings: settingReducer,
     article: articleReducer,
+    bookmarks: bookmarksReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(settingsMiddleware),
+    getDefaultMiddleware().concat(localStorageMiddleware),
 });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;

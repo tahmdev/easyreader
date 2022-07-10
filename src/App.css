@@ -23,6 +23,7 @@ body,
   font-family: var(--font-family);
   font-size: var(--font-size);
   line-height: var(--line-height);
+  overflow: auto;
 }
 .App {
   display: flex;
@@ -77,7 +78,7 @@ pre {
   font-size: 1.1em;
 }
 .sidebar-wrapper {
-  height: fit-content;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   position: sticky;
@@ -107,7 +108,7 @@ pre {
   margin-right: 0.5rem;
 }
 
-/*Bookmark*/
+/*In-reader Bookmark*/
 .bookmark {
   position: relative;
 }
@@ -119,4 +120,25 @@ pre {
   height: 100%;
   top: 0;
   left: -1rem;
+}
+
+/*Bookmarks*/
+
+.bookmark-container {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--bookmark-color);
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+}
+.bookmark-container > * {
+  margin: 1rem 0.5rem;
+}
+.bookmark-container > h2 {
+  font-size: 1.2em;
+  margin-bottom: 0.5rem;
+}
+.bookmark-container > a {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

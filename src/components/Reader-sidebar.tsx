@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { GetByURL } from "./GetByUrl";
 import { displayType } from "./Reader";
 
