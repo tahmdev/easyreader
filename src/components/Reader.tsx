@@ -1,8 +1,11 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useGetVisibleChildren } from "../hooks/useGetVisibleChildren";
 import { setArticle } from "../redux/slices/articleSlice";
 import { updateBookmark } from "../redux/slices/bookmarksSlice";
 import { useAppDispatch, useAppSelector } from "../redux/typedHooks";
+import { getTopElement } from "../utils/getTopElement";
+import { indexOfElement } from "../utils/indexOfElement";
+import { removeClassFromAll } from "../utils/removeClassFromAll";
 import { Bookmarks } from "./Bookmarks";
 import { ReaderSidebar } from "./Reader-sidebar";
 import { Settings } from "./Settings";
@@ -22,7 +25,7 @@ export const Reader: React.FC<Props> = () => {
     articleRef,
     { threshold: 0.3 },
     [article, display]
-  );
+  ).filter((el) => !filteredTagNames.includes(el.tagName));
 
   const scrollToLastPos = () => {
     const lastScrollPos = articleRef.current
@@ -51,26 +54,22 @@ export const Reader: React.FC<Props> = () => {
     if (display === "reader") {
       scrollToLastPos();
     } else {
-      window.scrollTo({ top: 0 });
+      window.scroll(0, 0);
     }
   }, [display]);
 
   useEffect(() => {
     if (display === "reader") {
-      removeAllOfClass("lastscrollpos");
-      const el = getTopElement(
-        visibleElements.filter((el) => !filteredTagNames.includes(el.tagName))
-      );
+      removeClassFromAll("lastscrollpos");
+      const el = getTopElement(visibleElements);
       el?.classList.add("lastscrollpos");
     }
   }, [visibleElements]);
 
   const addBookmark = () => {
     if (display === "reader" && articleRef.current) {
-      const el = getTopElement(
-        visibleElements.filter((el) => !filteredTagNames.includes(el.tagName))
-      );
-      removeAllOfClass("bookmark");
+      const el = getTopElement(visibleElements);
+      removeClassFromAll("bookmark");
       el.classList.add("bookmark");
       updateArticle();
 
@@ -79,7 +78,7 @@ export const Reader: React.FC<Props> = () => {
           title: article.title,
           url: article.url,
           progress: 10,
-          node: getIndexOfElement(articleRef.current, el),
+          node: indexOfElement(articleRef.current, el),
         })
       );
     }
@@ -94,29 +93,6 @@ export const Reader: React.FC<Props> = () => {
         })
       );
     }
-  };
-
-  const getTopElement = (elementList: Element[]) => {
-    elementList.sort(
-      (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
-    );
-    return elementList[0];
-  };
-
-  const removeAllOfClass = (className: string) => {
-    const elements = document.getElementsByClassName(className);
-    for (let el of elements) {
-      el.classList.remove(className);
-    }
-  };
-
-  const getIndexOfElement = (parent: Element, find: Element) => {
-    const nodeList = parent.getElementsByTagName("*");
-    if (nodeList) {
-      const index = Array.prototype.indexOf.call(nodeList, find);
-      return index;
-    }
-    return 0;
   };
 
   return (
