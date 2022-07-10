@@ -141,7 +141,7 @@ export const settingSlice = createSlice({
     value: initialState,
   },
   reducers: {
-    update: (state, action: PayloadAction<IPayload>) => {
+    updateSettings: (state, action: PayloadAction<IPayload>) => {
       const newSettings = state.value.map((section) => {
         return {
           title: section.title,
@@ -162,6 +162,6 @@ export const settingSlice = createSlice({
   },
 });
 
-export const { update } = settingSlice.actions;
+export const { updateSettings } = settingSlice.actions;
 
 export default settingSlice.reducer;

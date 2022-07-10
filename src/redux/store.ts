@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { settingsMiddleware } from "./middleware";
+import { articleReducer } from "./slices/articleSlice";
 import settingReducer from "./slices/settingSlice";
 
 export const store = configureStore({
   reducer: {
     settings: settingReducer,
+    article: articleReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(settingsMiddleware),

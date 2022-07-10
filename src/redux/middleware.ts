@@ -3,7 +3,7 @@ import { settingSlice } from "./slices/settingSlice";
 
 export const settingsMiddleware =
   (store: any) => (next: any) => (action: Action) => {
-    if (settingSlice.actions.update.match(action)) {
+    if (settingSlice.actions.updateSettings.match(action)) {
       setTimeout(() => {
         localStorage.setItem(
           "EZReaderSettings",

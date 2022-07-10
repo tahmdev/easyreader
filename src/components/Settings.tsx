@@ -1,5 +1,5 @@
 import React from "react";
-import { update } from "../redux/slices/settingSlice";
+import { updateSettings } from "../redux/slices/settingSlice";
 import { useAppDispatch, useAppSelector } from "../redux/typedHooks";
 
 interface Props {}
@@ -16,7 +16,7 @@ export const Settings: React.FC<Props> = () => {
       default:
         value = e.target.value;
     }
-    dispatch(update({ label: label, value: value }));
+    dispatch(updateSettings({ label: label, value: value }));
   };
 
   return (

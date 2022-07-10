@@ -1,12 +1,12 @@
 import React, {
   ChangeEventHandler,
-  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
-import { ArticleContext } from "../context/ArticleCTX";
+import { setArticle } from "../redux/slices/articleSlice";
+import { useAppDispatch } from "../redux/typedHooks";
 
 interface Props {
   hide: () => void;
@@ -16,7 +16,7 @@ export const GetByURL: React.FC<Props> = ({ hide }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const initialRender = useRef(true);
   const [queryUrl, setQueryUrl] = useState("");
-  const { setArticle } = useContext(ArticleContext);
+  const dispatch = useAppDispatch();
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setQueryUrl(e.target.value);
@@ -25,7 +25,7 @@ export const GetByURL: React.FC<Props> = ({ hide }) => {
   const handleQuery = () => {
     fetch("http://192.168.178.22:9000/scrape/url/?url=" + queryUrl)
       .then((res) => res.json())
-      .then((json) => setArticle(json));
+      .then((json) => dispatch(setArticle(json)));
     hide();
   };
 

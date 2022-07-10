@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from "react";
-import { ArticleContext } from "../context/ArticleCTX";
 import { GetByURL } from "./GetByUrl";
 import { displayType } from "./Reader";
 
@@ -15,7 +14,6 @@ export const ReaderSidebar: React.FC<Props> = ({
 }) => {
   const [showGetByUrl, setShowGetByUrl] = useState(false);
   const [showSidebar, setShowSidebar] = useState(true);
-  const { article, setArticle } = useContext(ArticleContext);
 
   const buttons = [
     {
@@ -41,7 +39,7 @@ export const ReaderSidebar: React.FC<Props> = ({
     },
     {
       label: "Note",
-      fn: () => console.log(article),
+      fn: () => console.log("article"),
     },
     {
       label: "Flash reading",

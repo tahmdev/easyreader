@@ -1,22 +1,15 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import { Reader } from "./components/Reader";
-import { Article, ArticleContext } from "./context/ArticleCTX";
 import { store } from "./redux/store";
 import { useAppSelector } from "./redux/typedHooks";
 import { ISetting } from "./redux/slices/settingSlice";
 
 // TODO:
 // SCROLL TO TOP ON NEW ARTICLE
+// DEBOUNCE WRITING TO LOCALHOST
 
 function App() {
-  const [article, setArticle] = useState<Article | null>(null);
-
-  // const [settings, setSettings] = useLocalstorage(
-  //   "EZReaderSettings",
-  //   initialSettings
-  // );
-
   const settings = useAppSelector((state) => state.settings.value);
 
   useEffect(() => {
@@ -52,9 +45,7 @@ function App() {
 
   return (
     <div className="App">
-      <ArticleContext.Provider value={{ article, setArticle }}>
-        <Reader />
-      </ArticleContext.Provider>
+      <Reader />
     </div>
   );
 }

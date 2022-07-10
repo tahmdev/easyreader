@@ -3,7 +3,7 @@ import { RefObject, useEffect, useState } from "react";
 export const useGetVisibleChildren = (
   elementRef: RefObject<Element>,
   observerOptions: IntersectionObserverInit,
-  dep?: any[]
+  dep: any[] = []
 ) => {
   const [visibleChildren, setVisibleChildren] = useState<Element[]>([]);
 
@@ -31,7 +31,7 @@ export const useGetVisibleChildren = (
       observer.disconnect();
       setVisibleChildren([]);
     };
-  }, dep || []);
+  }, dep);
 
   return visibleChildren;
 };

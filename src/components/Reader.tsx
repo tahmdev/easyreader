@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { ArticleContext } from "../context/ArticleCTX";
 import { useGetVisibleChildren } from "../hooks/useGetVisibleChildren";
+import { setArticle } from "../redux/slices/articleSlice";
+import { useAppDispatch, useAppSelector } from "../redux/typedHooks";
 import { ReaderSidebar } from "./Reader-sidebar";
 import { Settings } from "./Settings";
 
@@ -10,7 +11,8 @@ interface Props {}
 export const Reader: React.FC<Props> = () => {
   const readerRef = useRef<HTMLDivElement | null>(null);
   const [display, setDisplay] = useState<displayType>("reader");
-  const { article, setArticle } = useContext(ArticleContext);
+  const article = useAppSelector((state) => state.article.value);
+  const dispatch = useAppDispatch();
   const visibleElements = useGetVisibleChildren(readerRef, { threshold: 0.3 }, [
     article,
     display,
@@ -51,15 +53,16 @@ export const Reader: React.FC<Props> = () => {
 
   const updateArticle = () => {
     if (article && readerRef.current && display === "reader") {
-      setArticle({
-        ...article,
-        content: String(readerRef.current.innerHTML),
-      });
+      dispatch(
+        setArticle({
+          ...article,
+          content: String(readerRef.current.innerHTML),
+        })
+      );
     }
   };
 
   const addClassToTopElement = (className: string) => {
-    console.log(visibleElements);
     const filteredTags = ["BR", "EM", "DIV"];
     visibleElements
       .filter((el) => !filteredTags.includes(el.tagName))
