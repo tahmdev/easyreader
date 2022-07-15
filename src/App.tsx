@@ -1,20 +1,14 @@
 import { useEffect } from "react";
 import "./App.css";
 import { Reader } from "./components/Reader";
-import { store } from "./redux/store";
 import { useAppSelector } from "./redux/typedHooks";
 import { ISetting } from "./redux/slices/settingSlice";
 
 // TODO:
-// SCROLL TO TOP ON NEW ARTICLE
-// DEBOUNCE WRITING TO LOCALHOST
+// ALLOW EDITING BM TITLES
 
 function App() {
   const settings = useAppSelector((state) => state.settings.value);
-
-  useEffect(() => {
-    store.subscribe(() => {});
-  }, [store]);
 
   useEffect(() => {
     let root = document.documentElement;

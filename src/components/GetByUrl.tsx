@@ -25,7 +25,8 @@ export const GetByURL: React.FC<Props> = ({ hide }) => {
   const handleQuery = () => {
     fetch("http://192.168.178.22:9000/scrape/url/?url=" + queryUrl)
       .then((res) => res.json())
-      .then((json) => dispatch(setArticle(json)));
+      .then((json) => dispatch(setArticle(json)))
+      .then(() => window.scroll(0, 0));
     hide();
   };
 
