@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { setArticle } from "../redux/slices/articleSlice";
+import { setDisplay } from "../redux/slices/displaySlice";
 import { useAppDispatch } from "../redux/typedHooks";
 
 interface Props {
@@ -26,7 +27,10 @@ export const GetByURL: React.FC<Props> = ({ hide }) => {
     fetch("http://192.168.178.22:9000/scrape/url/?url=" + queryUrl)
       .then((res) => res.json())
       .then((json) => dispatch(setArticle(json)))
-      .then(() => window.scroll(0, 0));
+      .then(() => {
+        dispatch(setDisplay({ value: "reader" }));
+        window.scroll(0, 0);
+      });
     hide();
   };
 
