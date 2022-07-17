@@ -1,19 +1,20 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { setDisplay } from "../redux/slices/displaySlice";
+import { useAppDispatch } from "../redux/typedHooks";
 import { GetByURL } from "./GetByUrl";
 import { displayType } from "./Reader";
 
 interface Props {
-  setDisplay: Dispatch<SetStateAction<displayType>>;
   addBookmark: () => void;
   updateArticle: () => void;
 }
 export const ReaderSidebar: React.FC<Props> = ({
-  setDisplay,
   addBookmark,
   updateArticle,
 }) => {
   const [showGetByUrl, setShowGetByUrl] = useState(false);
   const [showSidebar, setShowSidebar] = useState(true);
+  const dispatch = useAppDispatch();
 
   const buttons = [
     {
@@ -23,7 +24,7 @@ export const ReaderSidebar: React.FC<Props> = ({
     {
       label: "Bookmarks",
       fn: () => {
-        setDisplay((prev) => (prev !== "bookmarks" ? "bookmarks" : "reader"));
+        dispatch(setDisplay({ value: "bookmarks" }));
         updateArticle();
       },
     },
@@ -34,14 +35,14 @@ export const ReaderSidebar: React.FC<Props> = ({
     {
       label: "Flash reading",
       fn: () => {
-        setDisplay((prev) => (prev !== "flash" ? "flash" : "reader"));
+        dispatch(setDisplay({ value: "flash" }));
         updateArticle();
       },
     },
     {
       label: "Settings",
       fn: () => {
-        setDisplay((prev) => (prev !== "settings" ? "settings" : "reader"));
+        dispatch(setDisplay({ value: "settings" }));
         updateArticle();
       },
     },

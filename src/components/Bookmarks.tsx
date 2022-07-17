@@ -1,14 +1,13 @@
 import React, { SetStateAction, Dispatch } from "react";
 import { setArticle } from "../redux/slices/articleSlice";
 import { Bookmark } from "../redux/slices/bookmarksSlice";
+import { setDisplay } from "../redux/slices/displaySlice";
 import { useAppDispatch, useAppSelector } from "../redux/typedHooks";
-import { displayType } from "./Reader";
 
 interface Props {
-  setDisplay: Dispatch<SetStateAction<displayType>>;
   setRedirect: Dispatch<SetStateAction<number | null>>;
 }
-export const Bookmarks: React.FC<Props> = ({ setRedirect, setDisplay }) => {
+export const Bookmarks: React.FC<Props> = ({ setRedirect }) => {
   const bookmarks = useAppSelector((state) => state.bookmarks.value);
   const dispatch = useAppDispatch();
   const openBookmark = (bookmark: Bookmark) => {
@@ -16,7 +15,7 @@ export const Bookmarks: React.FC<Props> = ({ setRedirect, setDisplay }) => {
       .then((res) => res.json())
       .then((json) => dispatch(setArticle(json)));
     setRedirect(bookmark.node);
-    setDisplay("reader");
+    dispatch(setDisplay({ value: "reader" }));
   };
   return (
     <div className="bookmarks-wrapper">

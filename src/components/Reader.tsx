@@ -17,7 +17,7 @@ interface Props {}
 export const Reader: React.FC<Props> = () => {
   const readerRef = useRef<HTMLDivElement | null>(null);
   const articleRef = useRef<HTMLDivElement | null>(null);
-  const [display, setDisplay] = useState<displayType>("reader");
+  const display = useAppSelector((state) => state.display.value);
   const article = useAppSelector((state) => state.article.value);
   const [redirect, setRedirect] = useState<number | null>(null);
   const dispatch = useAppDispatch();
@@ -106,16 +106,10 @@ export const Reader: React.FC<Props> = () => {
           />
         )}
         {display === "settings" && <Settings />}
-        {display === "bookmarks" && (
-          <Bookmarks setDisplay={setDisplay} setRedirect={setRedirect} />
-        )}
+        {display === "bookmarks" && <Bookmarks setRedirect={setRedirect} />}
         {display === "flash" && <Flash />}
       </div>
-      <ReaderSidebar
-        setDisplay={setDisplay}
-        addBookmark={addBookmark}
-        updateArticle={updateArticle}
-      />
+      <ReaderSidebar addBookmark={addBookmark} updateArticle={updateArticle} />
     </div>
   );
 };
