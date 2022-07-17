@@ -3,12 +3,12 @@ import { GetByURL } from "./GetByUrl";
 import { displayType } from "./Reader";
 
 interface Props {
-  setShowSettings: Dispatch<SetStateAction<displayType>>;
+  setDisplay: Dispatch<SetStateAction<displayType>>;
   addBookmark: () => void;
   updateArticle: () => void;
 }
 export const ReaderSidebar: React.FC<Props> = ({
-  setShowSettings,
+  setDisplay,
   addBookmark,
   updateArticle,
 }) => {
@@ -21,15 +21,9 @@ export const ReaderSidebar: React.FC<Props> = ({
       fn: () => setShowGetByUrl((prev) => !prev),
     },
     {
-      label: "Edit",
-      fn: () => console.log("b"),
-    },
-    {
       label: "Bookmarks",
       fn: () => {
-        setShowSettings((prev) =>
-          prev !== "bookmarks" ? "bookmarks" : "reader"
-        );
+        setDisplay((prev) => (prev !== "bookmarks" ? "bookmarks" : "reader"));
         updateArticle();
       },
     },
@@ -38,19 +32,16 @@ export const ReaderSidebar: React.FC<Props> = ({
       fn: () => addBookmark(),
     },
     {
-      label: "Note",
-      fn: () => console.log("article"),
-    },
-    {
       label: "Flash reading",
-      fn: () => console.log("a"),
+      fn: () => {
+        setDisplay((prev) => (prev !== "flash" ? "flash" : "reader"));
+        updateArticle();
+      },
     },
     {
       label: "Settings",
       fn: () => {
-        setShowSettings((prev) =>
-          prev !== "settings" ? "settings" : "reader"
-        );
+        setDisplay((prev) => (prev !== "settings" ? "settings" : "reader"));
         updateArticle();
       },
     },

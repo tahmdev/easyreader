@@ -7,10 +7,11 @@ import { getTopElement } from "../utils/getTopElement";
 import { indexOfElement } from "../utils/indexOfElement";
 import { removeClassFromAll } from "../utils/removeClassFromAll";
 import { Bookmarks } from "./Bookmarks";
+import { Flash } from "./Flash";
 import { ReaderSidebar } from "./Reader-sidebar";
 import { Settings } from "./Settings";
 
-export type displayType = "reader" | "settings" | "bookmarks";
+export type displayType = "reader" | "settings" | "bookmarks" | "flash";
 
 interface Props {}
 export const Reader: React.FC<Props> = () => {
@@ -108,9 +109,10 @@ export const Reader: React.FC<Props> = () => {
         {display === "bookmarks" && (
           <Bookmarks setDisplay={setDisplay} setRedirect={setRedirect} />
         )}
+        {display === "flash" && <Flash />}
       </div>
       <ReaderSidebar
-        setShowSettings={setDisplay}
+        setDisplay={setDisplay}
         addBookmark={addBookmark}
         updateArticle={updateArticle}
       />
