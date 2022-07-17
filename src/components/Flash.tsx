@@ -15,6 +15,14 @@ export const Flash: React.FC<Props> = () => {
           .settings.filter((el) => el.label === "Speed")[0].value
     )
   );
+  const useSmartFlashing = Boolean(
+    useAppSelector(
+      (state) =>
+        state.settings.value
+          .filter((el) => el.title === "Flash")[0]
+          .settings.filter((el) => el.label === "Use smart flashing")[0].value
+    )
+  );
   const dispatch = useAppDispatch();
   const [playing, setPlaying] = useState(false);
   const timer = useRef<any>(null);
@@ -42,10 +50,18 @@ export const Flash: React.FC<Props> = () => {
   };
 
   useEffect(() => {
+    let smartSpeed = speed;
+    if (useSmartFlashing && text[flashIdx]) {
+      smartSpeed = speed * (text[flashIdx].length * 0.1);
+      smartSpeed =
+        smartSpeed < 1
+          ? Math.min(smartSpeed, speed * 1.25)
+          : Math.max(smartSpeed, speed * 0.75);
+    }
     if (playing) {
       timer.current = setTimeout(() => {
         next();
-      }, speed);
+      }, smartSpeed);
     } else {
       clearInterval(timer.current);
     }
