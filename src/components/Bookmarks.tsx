@@ -2,6 +2,7 @@ import React, { SetStateAction, Dispatch } from "react";
 import { setArticle } from "../redux/slices/articleSlice";
 import { Bookmark } from "../redux/slices/bookmarksSlice";
 import { setDisplay } from "../redux/slices/displaySlice";
+import { setFlashIndex } from "../redux/slices/flashSlice";
 import { useAppDispatch, useAppSelector } from "../redux/typedHooks";
 
 interface Props {
@@ -16,6 +17,7 @@ export const Bookmarks: React.FC<Props> = ({ setRedirect }) => {
       .then((json) => dispatch(setArticle(json)));
     setRedirect(bookmark.node);
     dispatch(setDisplay({ value: "reader" }));
+    dispatch(setFlashIndex({ value: 0 }));
   };
   return (
     <div className="bookmarks-wrapper">
