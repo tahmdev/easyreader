@@ -128,7 +128,14 @@ if (localSettings) {
         {
           label: "Use smart flashing",
           type: "checkbox",
-          value: false,
+          value: true,
+        },
+        {
+          label: "Font Size",
+          type: "number",
+          value: 32,
+          suffix: "px",
+          property: "--flash-font-size",
         },
       ],
     },

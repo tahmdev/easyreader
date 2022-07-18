@@ -50,29 +50,38 @@ export const Flash: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    let smartSpeed = speed;
-    if (useSmartFlashing && text[flashIdx]) {
-      smartSpeed = speed * (text[flashIdx].length * 0.1);
-      smartSpeed =
-        smartSpeed < 1
-          ? Math.min(smartSpeed, speed * 1.25)
-          : Math.max(smartSpeed, speed * 0.75);
-    }
     if (playing) {
       timer.current = setTimeout(() => {
         next();
-      }, smartSpeed);
+      }, calculateSmartSpeed(speed));
     } else {
       clearInterval(timer.current);
     }
   }, [playing, next]);
 
+  const calculateSmartSpeed = (speed: number) => {
+    if (text[flashIdx].includes(".")) {
+      return speed * 1.8;
+    }
+    if (useSmartFlashing && text[flashIdx]) {
+      let smartSpeed = speed * (text[flashIdx].length * 0.1);
+      smartSpeed =
+        smartSpeed < 1
+          ? Math.min(smartSpeed, speed * 1.25)
+          : Math.max(smartSpeed, speed * 0.75);
+      return smartSpeed;
+    }
+    return speed;
+  };
+
   return (
     <div className="flash-reader">
       <p> {text[flashIdx]} </p>
-      <button onClick={prev}>prev</button>
-      <button onClick={() => setPlaying(!playing)}>play</button>
-      <button onClick={next}>next</button>
+      <div className="flash-controls">
+        <button onClick={prev}>prev</button>
+        <button onClick={() => setPlaying(!playing)}>play</button>
+        <button onClick={next}>next</button>
+      </div>
     </div>
   );
 };

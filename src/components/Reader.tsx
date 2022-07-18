@@ -101,6 +101,7 @@ export const Reader: React.FC<Props> = () => {
       <div className="reader-wrapper" ref={readerRef}>
         {article && display === "reader" && (
           <div
+            className="article-wrapper"
             ref={articleRef}
             dangerouslySetInnerHTML={{ __html: article.content }}
           />

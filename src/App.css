@@ -9,6 +9,7 @@
   --reader-width: 727px;
   --hide-images: initial;
   --bookmark-color: rgba(255, 0, 0, 0.445);
+  --flash-font-size: 32px;
 }
 html,
 body,
@@ -21,8 +22,6 @@ body,
   height: 100%;
   background-color: var(--bg-color);
   font-family: var(--font-family);
-  font-size: var(--font-size);
-  line-height: var(--line-height);
 }
 .App {
   display: flex;
@@ -57,7 +56,13 @@ pre {
 .reader-wrapper img {
   max-width: 100%;
   height: auto;
+}
+
+/*Article*/
+.article-wrapper {
   display: var(--hide-images);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
 }
 
 /*Sidebar*/
@@ -99,12 +104,17 @@ pre {
 }
 
 /*Settings*/
+.settings-wrapper {
+  padding-bottom: 1rem;
+}
 .settings-wrapper > * {
   display: flex;
   flex-direction: column;
+  padding-bottom: 1rem;
 }
 .settings-wrapper label > span {
   margin-right: 0.5rem;
+  line-height: 2rem;
 }
 
 /*In-reader Bookmark*/
@@ -122,7 +132,6 @@ pre {
 }
 
 /*Bookmarks*/
-
 .bookmark-container {
   display: flex;
   flex-direction: column;
@@ -140,4 +149,20 @@ pre {
 .bookmark-container > a {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/*Flash Reader*/
+.flash-reader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: var(--flash-font-size);
+}
+.flash-controls {
+  display: flex;
+}
+.flash-controls > * {
+  margin: 0.5rem;
 }
