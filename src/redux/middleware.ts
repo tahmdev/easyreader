@@ -10,7 +10,10 @@ export const localStorageMiddleware =
           setLocalstorage("EZReaderSettings", store.getState().settings.value),
         0
       );
-    } else if (bookmarksSlice.actions.updateBookmark.match(action)) {
+    } else if (
+      bookmarksSlice.actions.updateBookmark.match(action) ||
+      bookmarksSlice.actions.deleteBookmark.match(action)
+    ) {
       setTimeout(() => {
         setLocalstorage("EZReaderBookmarks", store.getState().bookmarks.value);
       }, 0);

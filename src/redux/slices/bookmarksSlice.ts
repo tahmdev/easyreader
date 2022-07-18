@@ -26,8 +26,11 @@ export const bookmarksSlice = createSlice({
         .filter((el) => el.url !== action.payload.url)
         .concat(action.payload);
     },
+    deleteBookmark: (state, action: PayloadAction<Bookmark>) => {
+      state.value = state.value.filter((el) => el.url !== action.payload.url);
+    },
   },
 });
 
-export const { updateBookmark } = bookmarksSlice.actions;
+export const { updateBookmark, deleteBookmark } = bookmarksSlice.actions;
 export const bookmarksReducer = bookmarksSlice.reducer;
